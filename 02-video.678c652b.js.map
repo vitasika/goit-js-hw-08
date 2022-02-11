@@ -1,1 +1,0 @@
-{"version":3,"sources":["js/02-video.js"],"names":["iframeEl","document","querySelector","console","log"],"mappings":";AACA,MAAMA,EAAWC,SAASC,cAAc,UACxCC,QAAQC,IAAIJ","file":"02-video.678c652b.js","sourceRoot":"../src","sourcesContent":["// Найти строку в html по тегу iframe\nconst iframeEl = document.querySelector('iframe');\nconsole.log(iframeEl);"]}
