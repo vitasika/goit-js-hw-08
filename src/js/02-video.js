@@ -11,8 +11,10 @@ const iframeEl = document.querySelector('iframe');
 const player = new Player(iframeEl);
 // console.log(player);
 
-player.on('timeupdate', player.on);
-console.log(player.on('timeupdate', player.on.toString()));
+player.on('timeupdate', throttle(playerOn, 1000));
+
+
+
 
 /*timeupdate
 Triggered as the currentTime of the video updates. It generally fires every 250ms, 
