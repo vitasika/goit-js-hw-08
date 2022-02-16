@@ -10,8 +10,16 @@ const iframeEl = document.querySelector('iframe');
 // Создаем новый элемент player, библиотеки Player
 const player = new Player(iframeEl);
 // console.log(player);
+player.on('play', function() {
+        console.log('played the video!');
+    });
 
-player.on('timeupdate', throttle(playerOn, 1000));
+    player.getVideoTitle().then(function(title) {
+        console.log('title:', title);
+    });
+
+
+//player.on('timeupdate', throttle(playerOn, 1000));
 
 
 
@@ -36,7 +44,7 @@ but it may vary depending on the browser.
 1) установи все библиотеки (по ТЗ) - npm  --- ГОТОВО
 2) импорт всех библиотек в файл.js --- ГОТОВО
 3) квериселекторы (кот нужно) 
-4) эдИвентлистнеры (кот нужно) 
+4) эдвентлистнеры (кот нужно) 
 5) колбеки из ивентлистнеров - они и есть решение задачи,
     для них ты весь код и придумываешь(смотри в ТЗ, что должно происходить при таком - то событии)! 
     
