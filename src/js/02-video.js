@@ -10,13 +10,11 @@ const iframeEl = document.querySelector('iframe');
 // Создаем новый элемент player, библиотеки Player
 const player = new Player(iframeEl);
 // console.log(player);
-player.on('play', function() {
+player.on('timeupdate', function(player) {
         console.log('played the video!');
     });
 
-    player.getVideoTitle().then(function(title) {
-        console.log('title:', title);
-    });
+    
 
 
 //player.on('timeupdate', throttle(playerOn, 1000));
@@ -40,7 +38,23 @@ but it may vary depending on the browser.
 
 // player.on('play', onPlay);
 
-/*  С чего начать
+
+player.setCurrentTime(30.456).then(function(seconds) {
+    // seconds = the actual time that the player seeked to
+}).catch(function(error) {
+    switch (error.name) {
+        case 'RangeError':
+            // the time was less than 0 or greater than the video’s duration
+            break;
+
+        default:
+            // some other error occurred
+            break;
+    }
+});
+
+/* 
+ С чего начать
 1) установи все библиотеки (по ТЗ) - npm  --- ГОТОВО
 2) импорт всех библиотек в файл.js --- ГОТОВО
 3) квериселекторы (кот нужно) 
