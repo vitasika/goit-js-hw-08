@@ -10,9 +10,11 @@ const iframeEl = document.querySelector('iframe');
 // Создаем новый элемент player, библиотеки Player
 const player = new Player(iframeEl);
 // console.log(player);
-player.on('timeupdate', function(player) {
-        console.log('played the video!');
-});
+
+//Метод "player.on('event',callBackFunction)" (на элементе player - прослушивает событие 'event', вызывает callBackFunction), событие 'event' меняем на "timeupdate",
+// а в callBackFunction подставляем функцию playerOn с пораметрами периода времени 1000 мс по условию.
+// при событии "timeupdate", вызывает колбек ф - цию "playerOn", через метод "Lodash.trottle"(вызов ф - ции с периодичностью 1000 мс)
+player.on('timeupdate', throttle(playerOn, 1000));
     
 
 player.setCurrentTime(30.456).then(function(seconds) {
@@ -30,8 +32,6 @@ player.setCurrentTime(30.456).then(function(seconds) {
     });
     
 
-
-//player.on('timeupdate', throttle(playerOn, 1000));
 
 const onPlay = function(data) {
     // data is an object containing properties specific to that event
