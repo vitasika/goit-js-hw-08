@@ -15,32 +15,25 @@ const player = new Player(iframeEl);
 // а в callBackFunction подставляем функцию playerOn с пораметрами периода времени 1000 мс по условию.
 // при событии "timeupdate", вызывает колбек ф - цию "playerOn", через метод "Lodash.trottle"(вызов ф - ции с периодичностью 1000 мс)
 player.on('timeupdate', throttle(playerOn, 1000));
-    
 
-player.setCurrentTime(30.456).then(function(seconds) {
+//время сохраняемое в наш локалсторидж, функцией playerOn во время работы плеера
+const localStorageTimeCurrent = localStorage.getItem('videoplayer-current-time');
+
+// Метод player.setCurrentTime(seconds) - устанавливает время старта видео, при запуске плеера
+player.setCurrentTime(localStorageTimeCurrent).then(function() {
         // seconds = the actual time that the player seeked to
     }).catch(function(error) {
         switch (error.name) {
             case 'RangeError':
                 // the time was less than 0 or greater than the video’s duration
                 break;
-    
+            
             default:
                 // some other error occurred
                 break;
         }
     });
     
-
-
-const onPlay = function(data) {
-    // data is an object containing properties specific to that event
-};
-
-player.on('play', onPlay);
-
-
-
 /*timeupdate
 Triggered as the currentTime of the video updates. It generally fires every 250ms, 
 but it may vary depending on the browser.
@@ -50,6 +43,19 @@ but it may vary depending on the browser.
     seconds: 3.034
 }
 */
+
+function playerOn (data) {
+
+    const time = data.seconds;
+
+    //Сохраняет в локальное хранилище текущее время видео (time), ключ - 'videoplayer-current-time'    
+    localStorage.setItem('videoplayer-current-time', time);
+
+    // data is an object containing properties specific to that event
+};
+
+
+
 
 
 
