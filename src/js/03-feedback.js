@@ -25,7 +25,8 @@ import throttle from 'lodash.throttle';
 const STORAGE_KEY = 'feedback-form-state';
 
 //
-const formData = {};
+const formData = {}; //читает одно поле
+//const formState = { email: '', message: '' }; //читает поле email и message
 
 //Находим элементы form, input, textarea, button в html разметке
 // const formEl = document.querySelector('feedback-form');
