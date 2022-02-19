@@ -19,34 +19,65 @@
 // Подключение Lodash.trottle
 import throttle from 'lodash.throttle';
 
-//Находим элементы form, input, textarea, button в html разметке
 
-const formEl = document.querySelector('feedback-form');
-
-const refs = {
-    // form: document.querySelector('feedback-form'),
-    input: document.querySelector('feedback-form input'),
-    textarea: document.querySelector('feedback-form textarea'),
-    button: document.querySelector('button'),
-};
 
 //Ключ локального хранилища
 const STORAGE_KEY = 'feedback-form-state';
 
-//Слушатели событий
-formEl.addEventListener('submit', onFormSubmit);
-//refs.form.addEventListener('submit', onFormSubmit); // слушатель на форму
-// refs.input.addEventListener('submit', onInputSubmit); // слушатель на email
-refs.textarea.addEventListener('input', throttle(onTextareaInput, 500)); // слушатель на textarea на messege
-// refs.button.addEventListener('submit', onButtonSubmit); // слушатель на button кнопку
+//Находим элементы form, input, textarea, button в html разметке
+// const formEl = document.querySelector('feedback-form');
+// const inputEl = document.querySelector('feedback-form input');
+// const textareaEl = document.querySelector('feedback-form textarea');
+// const buttonEl = document.querySelector('button');
+const refs = {
+    form: document.querySelector('.feedback-form'),
+    //input: document.querySelector('.feedback-form input'),
+    textarea: document.querySelector('.feedback-form textarea'),
+    //button: document.querySelector('button'),
+};
 
+//Слушатели событий
+refs.form.addEventListener('submit', onFormSubmit); // слушатель на ОТПРАВИТЬ
+//formEl.addEventListener('submit', onFormSubmit); // слушатель на форму
+//inputEl.addEventListener('submit', onInputChange); // слушатель на email
+refs.textarea.addEventListener('input', throttle(onTextareaChange, 500)); // слушатель на textarea (messege) с задержкой чтения 500мс
+//button.addEventListener('submit', onButtonSubmit); // слушатель на button кнопку
+
+populateTextarea(); // вызывается функция
 
 
 function onFormSubmit(event) {
-    const value = event.currentTarget.value;
+    event.preventDefault();
 
-    console.log(value);
+    console.log('Отправляем форму');
+    
+    event.currentTarget.reset();
+    
 }
+
+function onTextareaChange(event) {
+    const message = event.currentTarget.value;
+        console.log(message);
+    
+    localStorage.setItem(STORAGE_KEY, message)
+
+    
+}
+function populateTextarea() {
+    const savedMessage = localStorage.getItem(STORAGE_KEY)
+    if (savedMessage) {
+        console.log(savedMessage);
+        
+    }
+
+
+    
+}
+
 
 // console.log(refs);
 // console.log(localStorage);
+// console.log(refs.form);
+// console.log(refs.input);
+// console.log(refs.textarea);
+// console.log(refs.button);
