@@ -40,7 +40,7 @@ const refs = {
 refs.form.addEventListener('submit', onFormSubmit); // слушатель на ОТПРАВИТЬ
 //formEl.addEventListener('submit', onFormSubmit); // слушатель на форму
 //inputEl.addEventListener('submit', onInputChange); // слушатель на email
-refs.textarea.addEventListener('input', throttle(onTextareaChange, 500)); // слушатель на textarea (messege) с задержкой чтения 500мс
+refs.textarea.addEventListener('input', throttle(onTextareaChange, 500)); // функция throttle вызывает слушатель на textarea (messege) с задержкой вызова функции чтения на 500мс
 //button.addEventListener('submit', onButtonSubmit); // слушатель на button кнопку
 
 populateTextarea(); // вызывается функция
@@ -49,24 +49,26 @@ populateTextarea(); // вызывается функция
 function onFormSubmit(event) {
     event.preventDefault();
 
-    console.log('Отправляем форму');
-    
+    console.log('Отправляем форму');    
     event.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
     
 }
 
 function onTextareaChange(event) {
-    const message = event.currentTarget.value;
+    const message = event.target.value;
         console.log(message);
     
     localStorage.setItem(STORAGE_KEY, message)
 
     
 }
+
 function populateTextarea() {
     const savedMessage = localStorage.getItem(STORAGE_KEY)
     if (savedMessage) {
         console.log(savedMessage);
+        refs.textarea.value = savedMessage;
         
     }
 
