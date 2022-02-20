@@ -71,17 +71,29 @@ function onTextareaChange(event) {
     
 }
 
+
 function populateTextarea() {
-    const savedMessage = localStorage.getItem(STORAGE_KEY)
+    let savedMessage = localStorage.getItem(STORAGE_KEY)
     if (savedMessage) {
         console.log(savedMessage);
-        refs.textarea.value = savedMessage;
-        
-    }
+        refs.textarea.value = savedMessage;        
+    };
 
-
-    
+    Object.entries(savedMessage).forEach(([key, value]) => {
+        formData[key] = value;
+        refs.form.elements[key].value = value;
+    });    
 }
+
+// {
+
+//     let savedMessage = localStorage.getItem(STORAGE_KEY)
+
+//     for (const [key, value] of Object.entries(savedMessage)) {
+//     console.log(`${key}: ${value}`);
+//     }.forEach(element => console.log(element));
+
+// }
 
 
 // console.log(refs);
