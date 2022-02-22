@@ -59,7 +59,7 @@ function onFormSubmit(event) {
     //console.log('Отправляем форму');    
     event.currentTarget.reset(); // Функция которая очищает поле message после отправки в localStorage сообщения 
     localStorage.removeItem(STORAGE_KEY); // Функция очистки localStorage после отправки сообщения
-}
+};
 
 // Функция добавления текста в форму и его сохранения в памяти localStorage
 function onTextareaChange(event) {
@@ -69,21 +69,20 @@ function onTextareaChange(event) {
     localStorage.setItem(STORAGE_KEY, message) // функция которая добавляет введенный message в localStorage по ключу STORAGE_KEY
     //btnDisable();
     
-}
+};
 
 
 function populateTextarea() {
     let savedMessage = localStorage.getItem(STORAGE_KEY)
     if (savedMessage) {
         console.log(savedMessage);
-        refs.textarea.value = savedMessage;        
+        Object.entries(savedMessage).forEach(([key, value]) => {
+            formData[key] = value;
+            refs.form.elements[key].value = value;
+        });
+        //refs.textarea.value = savedMessage;        
     };
-
-    Object.entries(savedMessage).forEach(([key, value]) => {
-        formData[key] = value;
-        refs.form.elements[key].value = value;
-    });    
-}
+};
 
 // {
 
