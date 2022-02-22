@@ -77,23 +77,12 @@ function populateTextarea() {
     if (savedMessage) {
         console.log(savedMessage);
         Object.entries(savedMessage).forEach(([key, value]) => {
-            formData[key] = value;
-            refs.form.elements[key].value = value;
-        });
+        formData[key] = value;
+        refs.form.elements[key].value = value;
+    }); 
         //refs.textarea.value = savedMessage;        
     };
 };
-
-// {
-
-//     let savedMessage = localStorage.getItem(STORAGE_KEY)
-
-//     for (const [key, value] of Object.entries(savedMessage)) {
-//     console.log(`${key}: ${value}`);
-//     }.forEach(element => console.log(element));
-
-// }
-
 
 // console.log(refs);
 // console.log(localStorage);
@@ -101,3 +90,91 @@ function populateTextarea() {
 // console.log(refs.input);
 // console.log(refs.textarea);
 // console.log(refs.button);
+
+
+/*
+Вариант 2
+{
+//Ключ локального хранилища
+const STORAGE_KEY = 'feedback-form-state';
+
+//
+const formData = {}; //читает одно поле
+//const formState = { email: '', message: '' }; //читает поле email и message
+
+//Находим элементы form, input, textarea, button в html разметке
+const refs = {
+    form: document.querySelector('.feedback-form'),
+    input: document.querySelector('.feedback-form input'),
+    textarea: document.querySelector('.feedback-form textarea'),
+    //button: document.querySelector('button'),
+};
+
+//Слушатели событий
+refs.form.addEventListener('submit', onFormSubmit); // слушатель на ОТПРАВИТЬ
+//formEl.addEventListener('submit', onFormSubmit); // слушатель на форму
+refs.input.addEventListener('submit', throttle(onInputChange, 500)); // слушатель на email
+refs.textarea.addEventListener('input', throttle(onTextareaChange, 500)); // функция throttle вызывает слушатель на textarea (messege) с задержкой вызова функции чтения на 500мс
+//button.addEventListener('submit', onButtonSubmit); // слушатель на button кнопку
+
+//Форма прослушивания input
+refs.form.addEventListener('input', event => {
+    //console.log(event.target); //показывает значения поля в html
+    //console.log(event.target.name); //показавает по имени в строке html в input name="email"
+    //console.log(event.target.value);//показавает значание введенное в html в textarea name="message"
+    formData[event.target.name] = event.target.value; //приравнивает к [ключу] = значение
+    formData[event.target.email] = event.target.value; //приравнивает к [ключу] = значение
+    console.log(formData);
+    //localStorage.setItem(JSON.stringify(STORAGE_KEY,formData))
+});
+
+populateTextarea(); // вызывается функция
+
+// Функция уберает перезагрузку страницы и очищает форму и localStorage после отправки
+function onFormSubmit(event) {
+    event.preventDefault(); // функция которая убирает перезагрузку страницы
+    console.log('Отправляем форму');    
+    event.currentTarget.reset(); // Функция которая очищает поле message после отправки в localStorage сообщения 
+    localStorage.removeItem(STORAGE_KEY); // Функция очистки localStorage после отправки сообщения
+};
+
+// Функция уберает перезагрузку страницы и очищает форму и localStorage после отправки
+function onInputChange(event) {
+    event.preventDefault(); // функция которая убирает перезагрузку страницы
+    console.log('Отправляем форму');    
+    event.currentTarget.reset(); // Функция которая очищает поле message после отправки в localStorage сообщения 
+    localStorage.removeItem(STORAGE_KEY); // Функция очистки localStorage после отправки сообщения
+};
+
+// Функция добавления текста в форму и его сохранения в памяти localStorage
+function onTextareaChange(event) {
+    const message = event.target.value; //функция которая получает введенный текст в поле textarea 
+    console.log(message);
+    
+    const input = event.currentTarget.value; //функция которая получает введенный текст в поле textarea 
+        console.log(input);
+    
+    localStorage.setItem(STORAGE_KEY, message) // функция которая добавляет введенный message в localStorage по ключу STORAGE_KEY
+    localStorage.setItem(STORAGE_KEY, input) // функция которая добавляет введенный message в localStorage по ключу STORAGE_KEY
+    //btnDisable();
+    
+};
+
+
+function populateTextarea() {
+    let savedMessage = localStorage.getItem(STORAGE_KEY)
+    if (savedMessage) {
+        console.log(savedMessage);
+        Object.entries(savedMessage).forEach(([key, value]) => {
+        formData[key] = value;
+            refs.form.elements[key].value = value;
+            refs.input.elements[key].value = value;
+            
+        }); 
+        //refs.textarea.value = savedMessage;        
+    };
+};
+
+}
+
+*/
